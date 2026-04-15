@@ -1,0 +1,152 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+package com.mycompany.restauranteelbuensabor;
+
+public class Imprimir {
+   public Imprimir() {
+   }
+
+   public static void mostrarCarta() {
+      System.out.println("========================================");
+      System.out.println("    RESTAURANTE EL BUEN SABOR");
+      System.out.println("    --- NUESTRA CARTA ---");
+      System.out.println("========================================");
+
+      for(int i = 0; i < Datos.nom.length; ++i) {
+         System.out.printf("%d. %-22s $%,.0f%n", i + 1, Datos.nom[i], Datos.p[i]);
+      }
+
+      System.out.println("========================================");
+   }
+
+   public static void mostrarPedido() {
+      double sub = (double)0.0F;
+      int i = 0;
+      System.out.println("--- PEDIDO ACTUAL ---");
+
+      for(; i < Datos.nom.length; ++i) {
+         if (Datos.cant[i] > 0) {
+            System.out.printf("%-20s x%-6d $%,.0f%n", Datos.nom[i], Datos.cant[i], Datos.p[i] * (double)Datos.cant[i]);
+            sub += Datos.p[i] * (double)Datos.cant[i];
+         }
+      }
+
+      System.out.println("--------------------");
+      System.out.printf("%-27s $%,.0f%n", "Subtotal:", sub);
+   }
+
+   public static void imprimirFacturaCompleta() {
+      double sub = (double)0.0F;
+      double iva = (double)0.0F;
+      double tot = (double)0.0F;
+      double prop = (double)0.0F;
+      int cont = 0;
+      double aux = (double)0.0F;
+
+      for(int i = 0; i < Datos.nom.length; ++i) {
+         if (Datos.cant[i] > 0) {
+            sub += Datos.p[i] * (double)Datos.cant[i];
+            ++cont;
+         }
+      }
+
+      if (cont > 3) {
+         aux = sub - sub * 0.05;
+      } else {
+         aux = sub;
+      }
+
+      if (aux > (double)50000.0F) {
+         iva = aux * 0.19;
+         tot = aux + iva;
+         prop = tot * 0.1;
+         tot += prop;
+      } else {
+         iva = aux * 0.19;
+         tot = aux + iva;
+         prop = (double)0.0F;
+      }
+
+      String sep = "========================================";
+      System.out.println(sep);
+      System.out.println("    RESTAURANTE EL BUEN SABOR");
+      System.out.println("    Calle 15 #8-32, Valledupar");
+      System.out.println("    NIT: 900.123.456-7");
+      System.out.println(sep);
+      System.out.printf("FACTURA No. %03d%n", Datos.nf);
+      System.out.println("----------------------------------------");
+
+      for(int j = 0; j < Datos.nom.length; ++j) {
+         if (Datos.cant[j] > 0) {
+            System.out.printf("%-20s x%-6d $%,.0f%n", Datos.nom[j], Datos.cant[j], Datos.p[j] * (double)Datos.cant[j]);
+         }
+      }
+
+      System.out.println("----------------------------------------");
+      System.out.printf("%-27s $%,.0f%n", "Subtotal:", aux);
+      System.out.printf("%-27s $%,.0f%n", "IVA (19%):", iva);
+      if (prop > (double)0.0F) {
+         System.out.printf("%-27s $%,.0f%n", "Propina (10%):", prop);
+      }
+
+      System.out.println("----------------------------------------");
+      System.out.printf("%-27s $%,.0f%n", "TOTAL:", tot);
+      System.out.println(sep);
+      System.out.println("Gracias por su visita!");
+      System.out.println("El Buen Sabor - Valledupar");
+      System.out.println(sep);
+      ++Datos.nf;
+      Datos.est = 0;
+      Datos.tot = tot;
+   }
+
+   public static void imprimirFacturaResumen() {
+      double sub = (double)0.0F;
+      double iva = (double)0.0F;
+      double tot = (double)0.0F;
+      double prop = (double)0.0F;
+      int cont = 0;
+      double aux = (double)0.0F;
+
+      for(int i = 0; i < Datos.nom.length; ++i) {
+         if (Datos.cant[i] > 0) {
+            sub += Datos.p[i] * (double)Datos.cant[i];
+            ++cont;
+         }
+      }
+
+      if (cont > 3) {
+         aux = sub - sub * 0.05;
+      } else {
+         aux = sub;
+      }
+
+      if (aux > (double)50000.0F) {
+         iva = aux * 0.19;
+         tot = aux + iva;
+         prop = tot * 0.1;
+         tot += prop;
+      } else {
+         iva = aux * 0.19;
+         tot = aux + iva;
+         prop = (double)0.0F;
+      }
+
+      String sep = "========================================";
+      System.out.println(sep);
+      System.out.println("    RESTAURANTE EL BUEN SABOR");
+      System.out.println("    Calle 15 #8-32, Valledupar");
+      System.out.println("    NIT: 900.123.456-7");
+      System.out.println(sep);
+      System.out.printf("FACTURA No. %03d (RESUMEN)%n", Datos.nf);
+      System.out.println("----------------------------------------");
+      System.out.printf("%-27s $%,.0f%n", "Subtotal:", aux);
+      System.out.printf("%-27s $%,.0f%n", "IVA (19%):", iva);
+      if (prop > (double)0.0F) {
+         System.out.printf("%-27s $%,.0f%n", "Propina (10%):", prop);
+      }
+
+      System.out.println("----------------------------------------");
+      System.out.printf("%-27s $%,.0f%n", "TOTAL:", tot);
+      System.out.println(sep);
+   }
+}

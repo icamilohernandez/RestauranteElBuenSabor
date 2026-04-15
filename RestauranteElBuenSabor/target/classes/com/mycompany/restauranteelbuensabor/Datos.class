@@ -1,0 +1,17 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+package com.mycompany.restauranteelbuensabor;
+
+public class Datos {
+   public static String[] nom = new String[]{"Bandeja Paisa", "Sancocho de Gallina", "Arepa con Huevo", "Jugo Natural", "Gaseosa", "Cerveza Poker", "Agua Panela", "Arroz con Pollo"};
+   public static double[] p = new double[]{(double)32000.0F, (double)28000.0F, (double)8000.0F, (double)7000.0F, (double)4500.0F, (double)6000.0F, (double)3500.0F, (double)25000.0F};
+   public static int[] cant = new int[8];
+   public static int ms = 0;
+   public static int est = 0;
+   public static double tot = (double)0.0F;
+   public static int nf = 1;
+   public static String x = "El Buen Sabor";
+   public static String tmp = "";
+
+   public Datos() {
+   }
+}

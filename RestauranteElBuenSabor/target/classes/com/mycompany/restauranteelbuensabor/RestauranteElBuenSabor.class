@@ -1,0 +1,11 @@
+// Source code is decompiled from a .class file using FernFlower decompiler (from Intellij IDEA).
+package com.mycompany.restauranteelbuensabor;
+
+public class RestauranteElBuenSabor {
+   public RestauranteElBuenSabor() {
+   }
+
+   public static void main(String[] var0) {
+      throw new Error("Unresolved compilation problems: \n\tnom cannot be resolved or is not a field\n\tnom cannot be resolved or is not a field\n\test cannot be resolved or is not a field\n\tms cannot be resolved or is not a field\n\tms cannot be resolved or is not a field\n\test cannot be resolved or is not a field\n\tms cannot be resolved or is not a field\n\tms cannot be resolved or is not a field\n\tms cannot be resolved or is not a field\n\test cannot be resolved or is not a field\n\tnom cannot be resolved or is not a field\n\tnom cannot be resolved or is not a field\n\tThe method hacerTodo() is undefined for the type Proceso\n");
+   }
+}
