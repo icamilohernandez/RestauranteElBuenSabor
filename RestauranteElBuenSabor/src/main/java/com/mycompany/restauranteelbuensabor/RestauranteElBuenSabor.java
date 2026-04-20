@@ -1,40 +1,47 @@
-
 package com.mycompany.restauranteelbuensabor;
 
 import java.util.Scanner;
 
-
 public class RestauranteElBuenSabor {
+
+    private static final String SEPARADOR_DOBLE  = "========================================";
+
+    private static void mostrarEncabezado() {
+        System.out.println(SEPARADOR_DOBLE);
+        System.out.println("    " + Datos.NOMBRE_RESTAURANTE);
+        System.out.println("    " + Datos.DIRECCION);
+        System.out.println("    NIT: " + Datos.NIT);
+        System.out.println(SEPARADOR_DOBLE);
+    }
+
+    private static void mostrarMenu() {
+        System.out.println("1. Ver carta");
+        System.out.println("2. Agregar producto al pedido");
+        System.out.println("3. Ver pedido actual");
+        System.out.println("4. Generar factura");
+        System.out.println("5. Nueva mesa");
+        System.out.println("0. Salir");
+        System.out.println(SEPARADOR_DOBLE);
+        System.out.print("Seleccione una opcion: ");
+    }
+
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         int opcionMenu = 0;
         boolean ejecutando = true;
         int intentosInvalidos = 0;
-        String mensajeAux = "";
-        int totalEntero = 0;
-        double totalFactura = 0;
-        boolean continuar = true;
-        System.out.println("========================================");
-        System.out.println("    RESTAURANTE EL BUEN SABOR");
-        System.out.println("    Calle 15 #8-32, Valledupar");
-        System.out.println("    NIT: 900.123.456-7");
-        System.out.println("========================================");
+
+        mostrarEncabezado();
+
         while (ejecutando) {
-            System.out.println("1. Ver carta");
-            System.out.println("2. Agregar producto al pedido");
-            System.out.println("3. Ver pedido actual");
-            System.out.println("4. Generar factura");
-            System.out.println("5. Nueva mesa");
-            System.out.println("0. Salir");
-            System.out.println("========================================");
-            System.out.print("Seleccione una opcion: ");
+            mostrarMenu();
             opcionMenu = scanner.nextInt();
+
             if (opcionMenu == 1) {
-                // mostrar carta
                 Imprimir.mostrarCarta();
                 System.out.println();
+
             } else if (opcionMenu == 2) {
-                // agregar producto
                 System.out.println("--- AGREGAR PRODUCTO ---");
                 System.out.print("Numero de producto (1-" + Datos.nombres.length + "): ");
                 int numeroProducto = scanner.nextInt();
@@ -43,108 +50,76 @@ public class RestauranteElBuenSabor {
                 if (numeroProducto > 0 && numeroProducto <= Datos.nombres.length) {
                     if (cantidad > 0) {
                         if (Datos.estadoMesa == 0) {
-                            // mesa no activa - pedir numero de mesa
                             System.out.print("Ingrese numero de mesa: ");
                             Datos.numeroMesaActual = scanner.nextInt();
                             if (Datos.numeroMesaActual > 0) {
                                 Datos.estadoMesa = 1;
-                                mensajeAux = String.valueOf(Datos.numeroMesaActual);
-                                totalEntero = Datos.numeroMesaActual;
-                                intentosInvalidos = totalEntero + 1;
                             } else {
-                                // mesa invalida pero se continua igual
                                 Datos.numeroMesaActual = 1;
                                 Datos.estadoMesa = 1;
-                                mensajeAux = "1";
-                                totalEntero = 1;
-                                intentosInvalidos = 2;
-                            } // fin if numeroMesaActual>0
-                        } // fin if estadoMesa==0
-                          // agrega al pedido
+                            }
+                        }
                         Datos.cantidades[numeroProducto - 1] = Datos.cantidades[numeroProducto - 1] + cantidad;
                         System.out.println("Producto agregado al pedido.");
                         System.out.println("  -> " + Datos.nombres[numeroProducto - 1] + " x" + cantidad);
-                        totalFactura = Datos.precios[numeroProducto - 1] * cantidad;
                     } else {
                         if (cantidad == 0) {
-                            // cantidad es cero
                             System.out.println("La cantidad no puede ser cero.");
                         } else {
-                            // cantidad negativa
                             System.out.println("Cantidad invalida. Ingrese un valor positivo.");
                         }
-                    } // fin if cantidad>0
+                    }
                 } else {
                     if (numeroProducto <= 0) {
                         System.out.println("El numero debe ser mayor a cero.");
                     } else {
                         System.out.println("Producto no existe. La carta tiene " + Datos.nombres.length + " productos.");
                     }
-                } // fin if numeroProducto>0
+                }
                 System.out.println();
+
             } else if (opcionMenu == 3) {
-                // ver pedido actual
                 System.out.println();
                 if (Utilidades.validar()) {
                     Imprimir.mostrarPedido();
                 } else {
                     System.out.println("No hay productos en el pedido actual.");
                     System.out.println("Use la opcion 2 para agregar productos.");
-                    continuar = true;
-                } // fin if validar
+                }
                 System.out.println();
+
             } else if (opcionMenu == 4) {
-                // generar factura
                 System.out.println();
                 if (Utilidades.validar()) {
-                    double totalCalculado = 0;
-                    // procesar pedido y generar total
-                    totalCalculado = Proceso.hacerTodo();
-                    totalEntero = (int) totalCalculado;
-                    mensajeAux = "Total calculado: $" + totalEntero;
-                    totalFactura = totalCalculado;
-                    // imprimir factura detallada
+                    Proceso.calcularTotal();
                     Imprimir.imprimirFacturaCompleta();
                     System.out.println();
                 } else {
                     System.out.println("No se puede generar factura.");
                     System.out.println("No hay productos en el pedido.");
                     System.out.println("Use la opcion 2 para agregar productos primero.");
-                    // reiniciar variables locales
-                    totalEntero = 0;
-                    mensajeAux = "";
-                    totalFactura = 0;
-                    continuar = true;
-                } // fin if validar
+                }
+
             } else if (opcionMenu == 5) {
-                // nueva mesa - reiniciar pedido
                 System.out.println();
                 Utilidades.reiniciar();
-                // limpiar variables locales del main
                 intentosInvalidos = 0;
-                totalEntero = 0;
-                mensajeAux = "";
-                totalFactura = 0;
-                continuar = true;
                 System.out.println("Mesa reiniciada. Lista para nuevo cliente.");
                 System.out.println();
+
             } else if (opcionMenu == 0) {
-                // salir
                 ejecutando = false;
                 System.out.println("Hasta luego!");
+
             } else {
-                // opcion no reconocida
                 System.out.println("Opcion no valida. Seleccione entre 0 y 5.");
-                Scanner scannerSecundario = new Scanner(System.in);
                 intentosInvalidos = intentosInvalidos + 1;
-                if (intentosInvalidos > 3) {
+                if (intentosInvalidos > Datos.MIN_ITEMS_DESCUENTO) {
                     System.out.println("Demasiados intentos invalidos.");
                     intentosInvalidos = 0;
-                    // limpiar buffer con segundo scanner - innecesario
-                    String lineaDescartada = scannerSecundario.hasNextLine() ? scannerSecundario.nextLine() : "";
-                } // fin if intentosInvalidos>3
-            } // fin if-else opcionMenu
-        } // fin while
+                }
+            }
+        }
         scanner.close();
-    }// fin main
+    }
 }
