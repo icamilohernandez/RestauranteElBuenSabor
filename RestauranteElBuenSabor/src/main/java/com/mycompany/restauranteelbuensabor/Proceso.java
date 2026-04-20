@@ -1,5 +1,9 @@
 package com.mycompany.restauranteelbuensabor;
 
+/**
+ * Coordina el proceso de calculo del total de la factura
+ * y actualiza el estado global del sistema al finalizar.
+ */
 public class Proceso {
 
     public static double calcularSubtotal() {
@@ -28,6 +32,10 @@ public class Proceso {
         return 0;
     }
 
+    /**
+     * Genera la factura del pedido actual, actualiza el estado de la mesa
+     * y persiste el total en Datos para consulta posterior.
+     */
     public static double calcularTotal() {
         Factura factura = new Factura(Datos.pedidoActual, Datos.numeroFactura);
         double total = factura.calcularTotal();

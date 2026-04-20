@@ -3,6 +3,10 @@ package com.mycompany.restauranteelbuensabor;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Representa el pedido activo de una mesa.
+ * Agregar el mismo producto dos veces acumula la cantidad en lugar de crear un item duplicado.
+ */
 public class Pedido {
     private final List<ItemPedido> items = new ArrayList<>();
 
@@ -10,6 +14,7 @@ public class Pedido {
         int indice = 0;
         while (indice < items.size()) {
             if (items.get(indice).getProducto().getNombre().equals(producto.getNombre())) {
+                // Si el producto ya existe en el pedido, se acumula la cantidad
                 items.get(indice).agregarCantidad(cantidad);
                 return;
             }
@@ -18,6 +23,9 @@ public class Pedido {
         items.add(new ItemPedido(producto, cantidad));
     }
 
+    /**
+     * Calcula la suma de todos los items sin aplicar descuentos ni impuestos.
+     */
     public double calcularSubtotal() {
         double subtotal = 0;
         int indice = 0;
