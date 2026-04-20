@@ -4,7 +4,7 @@ import java.util.Scanner;
 
 public class RestauranteElBuenSabor {
 
-    private static final String SEPARADOR_DOBLE  = "========================================";
+    private static final String SEPARADOR_DOBLE = "========================================";
 
     private static void mostrarEncabezado() {
         System.out.println(SEPARADOR_DOBLE);
@@ -43,11 +43,11 @@ public class RestauranteElBuenSabor {
 
             } else if (opcionMenu == 2) {
                 System.out.println("--- AGREGAR PRODUCTO ---");
-                System.out.print("Numero de producto (1-" + Datos.nombres.length + "): ");
+                System.out.print("Numero de producto (1-" + Datos.CARTA.length + "): ");
                 int numeroProducto = scanner.nextInt();
                 System.out.print("Cantidad: ");
                 int cantidad = scanner.nextInt();
-                if (numeroProducto > 0 && numeroProducto <= Datos.nombres.length) {
+                if (numeroProducto > 0 && numeroProducto <= Datos.CARTA.length) {
                     if (cantidad > 0) {
                         if (Datos.estadoMesa == 0) {
                             System.out.print("Ingrese numero de mesa: ");
@@ -59,9 +59,9 @@ public class RestauranteElBuenSabor {
                                 Datos.estadoMesa = 1;
                             }
                         }
-                        Datos.cantidades[numeroProducto - 1] = Datos.cantidades[numeroProducto - 1] + cantidad;
+                        Datos.pedidoActual.agregarItem(Datos.CARTA[numeroProducto - 1], cantidad);
                         System.out.println("Producto agregado al pedido.");
-                        System.out.println("  -> " + Datos.nombres[numeroProducto - 1] + " x" + cantidad);
+                        System.out.println("  -> " + Datos.CARTA[numeroProducto - 1].getNombre() + " x" + cantidad);
                     } else {
                         if (cantidad == 0) {
                             System.out.println("La cantidad no puede ser cero.");
@@ -73,7 +73,7 @@ public class RestauranteElBuenSabor {
                     if (numeroProducto <= 0) {
                         System.out.println("El numero debe ser mayor a cero.");
                     } else {
-                        System.out.println("Producto no existe. La carta tiene " + Datos.nombres.length + " productos.");
+                        System.out.println("Producto no existe. La carta tiene " + Datos.CARTA.length + " productos.");
                     }
                 }
                 System.out.println();
